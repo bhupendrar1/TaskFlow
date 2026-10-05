@@ -1,155 +1,169 @@
-# 📝 MERN Task Manager App
+# 🚀 TaskFlow — Full-Stack Task Management Platform
 
-A full-stack **Task Manager Application** built using the **MERN Stack (MongoDB, Express, React, Node.js)**. This application allows users to create, update, delete, search, and mark tasks as completed.
+TaskFlow is a full-stack task management application built with the **MERN stack**. It provides a simple and responsive interface for creating, managing, updating, completing, searching, and deleting tasks.
 
----
-
-## 🚀 Tech Stack
-
-### 🔹 Frontend
-
-* React
-* Bootstrap
-* React Icons
-* React Toastify
-
-# Deploy 
-
-<img width="1920" height="1080" alt="Screenshot (297)" src="https://github.com/user-attachments/assets/21ae4863-3d0e-4369-905f-d7f8a1dbac76" />
-
-
-Main Component: `TaskManager.js` .
-API Calls: `api.js` .
-Utilities & API URL: `utils.js` .
-
-### 🔹 Backend
-
-* Node.js
-* Express.js
-* MongoDB
-* Mongoose
-* CORS
-* dotenv
-
-Server Entry: `index.js`.
-Routes: `TaskRouter.js` .
-Database Config: `db.js` .
-Model: `TaskModel.js` .
-Controller: `TaskController.js`.
-
----
+The project demonstrates how a React frontend communicates with a Node.js/Express REST API backed by MongoDB and Mongoose.
 
 ## ✨ Features
 
-* ➕ Create new tasks
-* 📋 Fetch all tasks
-* ✏️ Update task name
-* ✅ Mark task as completed
-* 🗑️ Delete tasks
-* 🔍 Search tasks
-* 🔔 Toast notifications for actions
-* 🌍 Deployed backend (Vercel compatible)
+- ➕ Create new tasks
+- 📋 View all tasks
+- ✏️ Update existing tasks
+- ✅ Mark tasks as completed
+- 🗑️ Delete tasks
+- 🔍 Search tasks
+- 🔔 Toast notifications for user actions
+- 📱 Responsive frontend interface
+- 🌐 RESTful backend API
+- ☁️ Deployment-ready backend configuration
 
----
+## 🛠️ Tech Stack
 
-## ⚙️ Installation & Setup
+### Frontend
 
-### 🔹 1️⃣ Clone the Repository
+- **React.js** — UI development
+- **Bootstrap 5** — responsive styling
+- **React Icons** — interface icons
+- **React Toastify** — notifications
 
-```bash
-git clone -- https://github.com/bhupendrar1/MERN-Task-Manager-App.git
-cd mern-task-manager
+### Backend
+
+- **Node.js** — server-side runtime
+- **Express.js** — REST API framework
+- **MongoDB** — database
+- **Mongoose** — MongoDB object modeling
+- **CORS** — cross-origin requests
+- **dotenv** — environment configuration
+
+## 📁 Project Structure
+
+```text
+TaskFlow/
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── backened/
+│   ├── Controllers/
+│   ├── Models/
+│   ├── Routes/
+│   ├── index.js
+│   ├── package.json
+│   └── vercel.json
+│
+├── .gitignore
+└── README.md
 ```
 
----
+## 🔌 REST API
 
-### 🔹 2️⃣ Backend Setup
+The backend exposes the following task endpoints:
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/tasks` | Fetch all tasks |
+| `POST` | `/tasks` | Create a new task |
+| `PUT` | `/tasks/:id` | Update a task |
+| `DELETE` | `/tasks/:id` | Delete a task |
+
+## ⚙️ Getting Started
+
+Follow these steps to run TaskFlow locally.
+
+### 1. Clone the repository
 
 ```bash
-cd server
+git clone https://github.com/bhupendrar1/TaskFlow.git
+cd TaskFlow
+```
+
+### 2. Setup the backend
+
+```bash
+cd backened
 npm install
 ```
 
-Create a `.env` file inside the server folder:
+Create a `.env` file inside the `backened` folder:
 
-```
+```env
 PORT=8080
 DB_URL=your_mongodb_connection_string
 ```
 
-Run backend:
+Start the backend:
 
 ```bash
 npm start
 ```
 
-Server runs on:
+The backend will run on `http://localhost:8080`.
 
-```
-http://localhost:8080
-```
+### 3. Setup the frontend
 
----
-
-### 🔹 3️⃣ Frontend Setup
+Open a new terminal from the project root:
 
 ```bash
-cd client
+cd frontend
 npm install
 npm start
-to start both backened & frontend project - npm start
 ```
 
-Frontend runs on:
+The frontend will run on `http://localhost:3000`.
 
+## 🔐 Environment Variables
+
+Do not commit real credentials or database connection strings to GitHub.
+
+Backend `.env` example:
+
+```env
+PORT=8080
+DB_URL=your_mongodb_connection_string
 ```
-http://localhost:3000
-```
 
----
-
-## 🔌 API Endpoints
-
-| Method | Endpoint   | Description     |
-| ------ | ---------- | --------------- |
-| GET    | /tasks     | Get all tasks   |
-| POST   | /tasks     | Create new task |
-| PUT    | /tasks/:id | Update task     |
-| DELETE | /tasks/:id | Delete task     |
-
----
+If the frontend uses an environment variable for the backend API URL, configure it according to the frontend configuration before running the application.
 
 ## 🌐 Deployment
 
-### Backend
+TaskFlow is structured as separate frontend and backend applications, making it suitable for deployment using platforms such as **Vercel** or **Netlify**.
 
-* Can be deployed on **Vercel .**
+For production deployment:
 
-### Frontend
+1. Deploy the backend API.
+2. Configure the production MongoDB connection string.
+3. Deploy the React frontend.
+4. Update the frontend API URL to point to the deployed backend.
+5. Configure environment variables in the deployment platform.
 
-* Can be deployed on **Netlify / Vercel**
+## 🧠 What This Project Demonstrates
 
-Make sure to update `API_URL` in `utils.js` with deployed backend URL.
+- Building a full-stack application using the MERN architecture
+- Designing and consuming REST APIs
+- CRUD operations with MongoDB and Mongoose
+- Connecting a React frontend with an Express backend
+- Managing environment variables securely
+- Structuring backend code using routes, controllers, and models
+- Handling frontend API interactions and user notifications
 
----
+## 🔮 Future Enhancements
 
-## 🔮 Future Improvements
-
-* 🔐 User authentication (JWT)
-* 📊 Task categories & priority
-* 📅 Due date feature
-* 🌙 Dark mode
-* 📱 Mobile optimized UI
-
----
+- 🔐 User authentication and authorization with JWT
+- 👥 User-specific task management
+- 🎯 Task priorities and categories
+- 📅 Due dates and reminders
+- 📊 Productivity dashboard and task analytics
+- 🌙 Dark mode
+- 🔎 Advanced filtering and sorting
 
 ## 👨‍💻 Author
 
-**Bhupendra Singh**
-MERN Stack Developer
+**Bhupendra Singh**  
+MERN / Full-Stack Developer
+
+- GitHub: [@bhupendrar1](https://github.com/bhupendrar1)
 
 ---
 
-⭐ If you like this project, consider giving it a star on GitHub!
-
-
+⭐ If you find TaskFlow useful, consider giving the repository a star!

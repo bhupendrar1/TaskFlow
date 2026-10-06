@@ -186,7 +186,7 @@ Recommended backend environment variables:
 
 ```env
 MONGODB_URI=your_mongodb_connection_string
-PORT=5000
+PORT = ...
 ```
 
 If your frontend uses a configurable backend URL, keep that value in a frontend environment file as well.

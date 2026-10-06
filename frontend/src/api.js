@@ -1,9 +1,7 @@
-import { API_URL } from "./utils"
-
+import { API_URL } from "./utils";
 
 export const CreateTask = async (taskObj) => {
     const url = `${API_URL}/tasks`;
-    console.log('url ', url)
     const options = {
         method: 'POST',
         headers: {
@@ -16,12 +14,12 @@ export const CreateTask = async (taskObj) => {
         const data = await result.json();
         return data;
     } catch (err) {
-        return err;
+        return { success: false, message: err.message || 'Failed to create task' };
     }
-}
+};
+
 export const GetAllTasks = async () => {
     const url = `${API_URL}/tasks`;
-    console.log('url ', url)
     const options = {
         method: 'GET',
         headers: {
@@ -33,13 +31,12 @@ export const GetAllTasks = async () => {
         const data = await result.json();
         return data;
     } catch (err) {
-        return err;
+        return { success: false, message: err.message || 'Failed to fetch tasks', data: [] };
     }
-}
+};
 
 export const DeleteTaskById = async (id) => {
     const url = `${API_URL}/tasks/${id}`;
-    console.log('url ', url)
     const options = {
         method: 'DELETE',
         headers: {
@@ -51,14 +48,12 @@ export const DeleteTaskById = async (id) => {
         const data = await result.json();
         return data;
     } catch (err) {
-        return err;
+        return { success: false, message: err.message || 'Failed to delete task' };
     }
-}
-
+};
 
 export const UpdateTaskById = async (id, reqBody) => {
     const url = `${API_URL}/tasks/${id}`;
-    console.log('url ', url)
     const options = {
         method: 'PUT',
         headers: {
@@ -71,6 +66,6 @@ export const UpdateTaskById = async (id, reqBody) => {
         const data = await result.json();
         return data;
     } catch (err) {
-        return err;
+        return { success: false, message: err.message || 'Failed to update task' };
     }
-}
+};

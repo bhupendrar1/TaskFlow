@@ -1,9 +1,12 @@
 import { toast } from 'react-toastify';
 
 export const notify = (message, type) => {
-    toast[type](message);
-}
+    if (toast[type]) {
+        toast[type](message);
+    } else {
+        toast(message);
+    }
+};
 
-// For local development, point the frontend to your local Express server.
-// Make sure your backend (index.js) is running on this port.
-export const API_URL = 'https://mern-task-manager-app-deploy-api-xi.vercel.app';
+// Connects to local Express server by default, or VITE_API_URL env variable in production
+export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';

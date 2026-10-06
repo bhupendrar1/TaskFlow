@@ -1,6 +1,5 @@
-
 import './App.css';
-import TaskManager from './TaskManager';
+import TaskManager from './TaskManager.jsx';
 
 function App() {
   return (
@@ -11,3 +10,4 @@ function App() {
 }
 
 export default App;
+

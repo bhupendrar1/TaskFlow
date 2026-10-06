@@ -2,25 +2,43 @@
 
 ### Full-Stack Task Management Application
 
-TaskFlow is a full-stack task management application built with the **MERN stack**. It provides a simple and responsive interface for creating, viewing, updating, and deleting tasks while storing task data in MongoDB through a RESTful Node.js/Express backend.
+TaskFlow is a full-stack task management application built with **React, Vite, Node.js, Express.js, and MongoDB**. It provides a modern productivity dashboard for creating, searching, filtering, updating, completing, and deleting tasks.
 
-> A portfolio-ready project demonstrating frontend development, REST API integration, MongoDB data management, and full-stack application architecture.
+The frontend communicates with a REST API built with Express.js, while MongoDB stores task data through Mongoose.
 
 ---
 
 ## ✨ Features
 
+### Task Management
 - Create new tasks
-- View all existing tasks
+- Edit existing tasks
 - Mark tasks as completed or pending
-- Update task details
 - Delete tasks
-- Persistent task storage with MongoDB
-- RESTful API architecture
-- Responsive user interface
-- Toast notifications for user actions
-- Clean separation between frontend and backend
-- Environment-based configuration for database and server settings
+- View all tasks
+
+### Productivity Dashboard
+- Total task count
+- Pending task count
+- Completed task count
+- Completion percentage with progress bar
+
+### Search & Filtering
+- Search tasks by name
+- Filter by:
+  - All
+  - Pending
+  - Completed
+
+### User Experience
+- Dark / Light mode
+- Theme preference saved in localStorage
+- Toast notifications
+- Loading state while fetching tasks
+- Responsive interface
+- Keyboard support:
+  - **Enter** → Add/Save task
+  - **Escape** → Cancel editing
 
 ---
 
@@ -28,12 +46,13 @@ TaskFlow is a full-stack task management application built with the **MERN stack
 
 ### Frontend
 
-- **React.js**
+- **React 19**
+- **Vite**
 - **JavaScript (ES6+)**
 - **Bootstrap 5**
 - **React Icons**
 - **React Toastify**
-- **Fetch API / REST API integration**
+- **Fetch API**
 
 ### Backend
 
@@ -47,7 +66,9 @@ TaskFlow is a full-stack task management application built with the **MERN stack
 
 ---
 
-## 🏗️ Project Architecture
+## 📁 Project Structure
+
+The repository is organized into separate frontend and backend applications:
 
 ```text
 TaskFlow/
@@ -55,83 +76,205 @@ TaskFlow/
 ├── backened/
 │   ├── Controllers/
 │   │   └── TaskController.js
+│   │
 │   ├── Models/
 │   │   ├── TaskModel.js
 │   │   └── db.js
+│   │
 │   ├── Routes/
 │   │   └── TaskRouter.js
+│   │
 │   ├── index.js
 │   ├── package.json
+│   ├── package-lock.json
 │   └── vercel.json
 │
 ├── frontend/
 │   ├── public/
+│   │   ├── favicon.ico
+│   │   ├── logo192.png
+│   │   ├── logo512.png
+│   │   ├── manifest.json
+│   │   └── robots.txt
+│   │
 │   ├── src/
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── TaskManager.jsx
+│   │   ├── api.js
+│   │   ├── index.css
+│   │   ├── logo.svg
+│   │   ├── main.jsx
+│   │   └── utils.js
+│   │
+│   ├── index.html
 │   ├── package.json
-│   └── ...
+│   ├── package-lock.json
+│   └── vite.config.js
 │
 ├── .gitignore
 └── README.md
 ```
 
----
-
-## 🔄 How It Works
-
-```text
-        ┌─────────────────────┐
-        │      React UI       │
-        │     Frontend        │
-        └──────────┬──────────┘
-                   │
-                   │ HTTP / REST API
-                   ▼
-        ┌─────────────────────┐
-        │   Express + Node.js │
-        │      Backend        │
-        └──────────┬──────────┘
-                   │
-                   │ Mongoose
-                   ▼
-        ┌─────────────────────┐
-        │       MongoDB       │
-        │   Task Persistence  │
-        └─────────────────────┘
-```
-
-The React frontend communicates with the Express backend through REST endpoints. The backend handles task operations and uses Mongoose to store and retrieve task data from MongoDB.
+> **Note:** `node_modules` folders are generated dependencies and should not normally be committed to GitHub.
 
 ---
 
-## 📋 Task Data Model
+## 🧩 Backend Architecture
 
-Each task contains the following fields:
+The backend follows a simple **Routes → Controllers → Models → MongoDB** structure.
+
+### Controllers
+
+`backened/Controllers/TaskController.js`
+
+Contains the business logic for:
+
+- Creating tasks
+- Fetching tasks
+- Updating tasks
+- Deleting tasks
+
+### Models
+
+`backened/Models/TaskModel.js`
+
+Defines the MongoDB/Mongoose task schema:
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `taskName` | String | Yes | Name/description of the task |
-| `isDone` | Boolean | Yes | Completion status of the task |
+| `taskName` | String | Yes | Name or description of the task |
+| `isDone` | Boolean | Yes | Whether the task is completed |
+
+### Database
+
+`backened/Models/db.js`
+
+Connects the Express application to MongoDB using the `DB_URL` environment variable.
+
+### Routes
+
+`backened/Routes/TaskRouter.js`
+
+Defines the REST API endpoints for task operations.
 
 ---
 
-## 🔌 API Endpoints
+## 🔌 REST API
 
-The backend exposes REST endpoints for task management.
+The backend mounts the task router at:
+
+```text
+/tasks
+```
+
+### Available Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/api/...` | Create a task |
-| `GET` | `/api/...` | Fetch all tasks |
-| `PUT` | `/api/.../:id` | Update a task |
-| `DELETE` | `/api/.../:id` | Delete a task |
+| GET | `/tasks` | Fetch all tasks |
+| POST | `/tasks` | Create a new task |
+| PUT | `/tasks/:id` | Update a task |
+| DELETE | `/tasks/:id` | Delete a task |
 
-> The exact route prefix is defined in `backened/Routes/TaskRouter.js` and can be adjusted according to the deployment environment.
+### Example Task Object
+
+```json
+{
+  "taskName": "Complete project documentation",
+  "isDone": false
+}
+```
+
+---
+
+## ⚙️ Frontend Architecture
+
+### `App.jsx`
+
+The main React component that renders the TaskFlow application.
+
+### `TaskManager.jsx`
+
+The main application component responsible for:
+
+- Task state management
+- API operations
+- Search
+- Filtering
+- Task statistics
+- Progress calculation
+- Dark/light theme
+- Task creation, editing, completion, and deletion
+
+### `api.js`
+
+Contains frontend functions for communicating with the backend:
+
+- `CreateTask()`
+- `GetAllTasks()`
+- `UpdateTaskById()`
+- `DeleteTaskById()`
+
+### `utils.js`
+
+Contains toast notification logic and the API base URL configuration.
+
+### `main.jsx`
+
+The React entry point. It loads React, Bootstrap, React Toastify, and renders the application.
+
+---
+
+## 🔄 Application Flow
+
+```text
+┌──────────────────────────┐
+│       TaskFlow UI        │
+│        React + Vite      │
+└────────────┬─────────────┘
+             │
+             │ Fetch API
+             │ HTTP Requests
+             ▼
+┌──────────────────────────┐
+│     Express.js API       │
+│       Node.js Server     │
+└────────────┬─────────────┘
+             │
+             │ Mongoose
+             ▼
+┌──────────────────────────┐
+│         MongoDB          │
+│      Task Database       │
+└──────────────────────────┘
+```
+
+### Request Flow
+
+For example, when a user creates a task:
+
+```text
+User
+  ↓
+TaskManager.jsx
+  ↓
+CreateTask()
+  ↓
+POST /tasks
+  ↓
+TaskRouter.js
+  ↓
+TaskController.js
+  ↓
+TaskModel.js
+  ↓
+MongoDB
+```
 
 ---
 
 ## 🚀 Getting Started
-
-Follow these steps to run TaskFlow locally.
 
 ### 1. Clone the repository
 
@@ -140,20 +283,22 @@ git clone https://github.com/bhupendrar1/TaskFlow.git
 cd TaskFlow
 ```
 
-### 2. Setup the backend
+---
+
+### 2. Setup the Backend
+
+Open a terminal:
 
 ```bash
 cd backened
 npm install
 ```
 
-Create a `.env` file inside the `backened` folder and add your MongoDB connection string and server configuration.
-
-Example:
+Create a `.env` file inside the `backened` folder:
 
 ```env
-MONGODB_URI=your_mongodb_connection_string
-PORT=5000
+DB_URL=your_mongodb_connection_string
+PORT=8080
 ```
 
 Then start the backend:
@@ -162,11 +307,13 @@ Then start the backend:
 npm start
 ```
 
-The backend uses Nodemon during development.
+The backend runs using Nodemon.
 
-### 3. Setup the frontend
+---
 
-Open a new terminal:
+### 3. Setup the Frontend
+
+Open another terminal:
 
 ```bash
 cd frontend
@@ -174,89 +321,129 @@ npm install
 npm start
 ```
 
-The React development server will start locally.
+The frontend uses **Vite** and is configured to run on:
 
----
-
-## 🔐 Environment Variables
-
-Do not commit real credentials, database passwords, API keys, or other secrets to GitHub.
-
-Recommended backend environment variables:
-
-```env
-MONGODB_URI=your_mongodb_connection_string
-PORT = ...
+```text
+http://localhost:3000
 ```
 
-If your frontend uses a configurable backend URL, keep that value in a frontend environment file as well.
+---
+
+## 🔐 Frontend Environment Variable
+
+The frontend supports a configurable backend URL through Vite environment variables.
+
+Create:
+
+```text
+frontend/.env
+```
+
+Add:
+
+```env
+VITE_API_URL=http://localhost:8080
+```
+
+The frontend reads this value through:
+
+```js
+import.meta.env.VITE_API_URL
+```
+
+If `VITE_API_URL` is not provided, the current frontend code falls back to:
+
+```text
+http://localhost:8080
+```
 
 ---
 
-## 🧪 Available Scripts
+## 📜 Available Scripts
 
 ### Backend
 
+From the `backened` directory:
+
 ```bash
 npm start
 ```
 
-Starts the Node.js/Express server using Nodemon.
+Starts the Express server using Nodemon.
 
 ### Frontend
 
+From the `frontend` directory:
+
 ```bash
 npm start
 ```
 
-Runs the React application in development mode.
+Starts the Vite development server.
+
+Build for production:
 
 ```bash
 npm run build
 ```
 
-Creates an optimized production build of the React application.
+Preview the production build:
 
 ```bash
-npm test
+npm run preview
 ```
 
-Runs the frontend test suite.
+---
+
+## ☁️ Deployment
+
+The repository contains separate Vercel configuration files:
+
+- `backened/vercel.json` → Backend deployment configuration
+- `frontend/vercel.json` → Frontend SPA rewrite configuration
+
+For a deployed frontend, set:
+
+```env
+VITE_API_URL=your_deployed_backend_url
+```
+
+in the frontend deployment environment.
 
 ---
 
-## 📌 Key Learning Outcomes
+## 🔒 Security
 
-This project demonstrates practical experience with:
+Do not commit sensitive information such as:
 
-- Building a full-stack MERN application
-- Designing and consuming REST APIs
-- CRUD operations with MongoDB
-- Mongoose schemas and database operations
+- MongoDB connection strings
+- Database passwords
+- API keys
+- Access tokens
+- Private credentials
+
+Use environment variables and keep local `.env` files out of version control.
+
+---
+
+## 🎯 Key Learning Outcomes
+
+TaskFlow demonstrates practical experience with:
+
 - React component-based development
-- Connecting frontend and backend applications
-- Managing asynchronous API requests
-- Handling application state and user interactions
-- Responsive UI development with Bootstrap
-- Environment variable configuration
-- Organizing backend code using controllers, models, and routes
-
----
-
-## 🔮 Future Improvements
-
-Potential improvements for future versions include:
-
-- User authentication and authorization
-- User-specific task lists
-- Task priorities and categories
-- Due dates and reminders
+- Vite-based frontend development
+- REST API integration
+- CRUD operations
+- Express.js routing
+- Controller-based backend architecture
+- MongoDB and Mongoose
+- Asynchronous JavaScript
+- React state and effects
 - Search and filtering
-- Pagination for large task lists
-- Drag-and-drop task organization
-- Dark mode
-- Automated testing
-- CI/CD pipeline
+- Responsive UI development
+- Dark/light theme persistence
+- Environment variable configuration
+- Full-stack frontend/backend integration
 
 ---
 
@@ -264,10 +451,9 @@ Potential improvements for future versions include:
 
 **Bhupendra Singh**
 
-B.Tech Computer Science & Engineering | Full-Stack Developer
+B.Tech Computer Science & Engineering
 
-- GitHub: [@bhupendrar1](https://github.com/bhupendrar1)
-- Repository: [TaskFlow](https://github.com/bhupendrar1/TaskFlow)
+GitHub: [@bhupendrar1](https://github.com/bhupendrar1)
 
 ---
 
@@ -277,4 +463,4 @@ This project is available for educational and portfolio purposes.
 
 ---
 
-⭐ If you find this project useful, consider giving it a star!
+⭐ If you find TaskFlow useful, consider giving the repository a star!
